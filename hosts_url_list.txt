@@ -1,7 +1,0 @@
-http://winhelp2002.mvps.org/hosts.zip
-http://hosts-file.net/download/hosts.zip
-http://hosts-file.net/hphosts-partial.asp
-http://hosts-file.net/ad_servers.asp
-http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-http://sysctl.org/cameleon/hosts.win
-http://www.malwaredomainlist.com/hostslist/hosts.txt
