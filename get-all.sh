@@ -24,7 +24,7 @@ mkdir hosts
 
 #fetching adshosts
 echo "fetching adshosts.."
-curl -s http://hosts-file.net/.%5Cad_servers.txt -$FOUT hosts/adshosts.txt
+$FETCH http://hosts-file.net/.%5Cad_servers.txt -$FOUT hosts/adshosts.txt
 du -sh hosts/adshosts.txt | sed -e 's|hosts/||'
 
 #fetching bhosts
