@@ -1,64 +1,67 @@
 #!/bin/bash
 
 #variables
-WG="wget"
+FETCH="curl" #wget or curl
+FOUT="-o" #-O for wget -o for curl
+HFOLDER="hosts"
+MACHOSTSFILE="MacHosts.txt"
 
 #clearing shell buffer
 clear
 
 #cleaning
-rm -rf temp/ hosts/
+rm -rf temp/ $HFOLDER
 
 #working folder prep
 mkdir hosts
 
 #fetching adshosts
-$WG "http://hosts-file.net/ad_servers.asp"
-mv ad_servers.asp hosts/adshosts.txt
+$FETCH "http://hosts-file.net/ad_servers.asp"
+mv ad_servers.asp $HFOLDERadshosts.txt
 
 #fetching bhosts
 mkdir temp
 cd temp
-$WG "http://hosts-file.net/download/hosts.zip"
+$FETCH "http://hosts-file.net/download/hosts.zip"
 unzip -q hosts.zip
 rm -rf *.zip
 mv hosts.txt ../bhosts.txt
 cd ..
 rm -rf temp
-mv bhosts.txt hosts/
+mv bhosts.txt $HFOLDER
 
 #fetching hphosts
-$WG "http://hosts-file.net/hphosts-partial.asp"
-mv hphosts-partial.asp hosts/hphosts.txt
+$FETCH "http://hosts-file.net/hphosts-partial.asp"
+mv hphosts-partial.asp $HFOLDERhphosts.txt
 
 #fetching malhosts
-$WG "http://www.malwaredomainlist.com/hostslist/hosts.txt" -O hosts/malhosts.txt
+$FETCH "http://www.malwaredomainlist.com/hostslist/hosts.txt" $FOUT $HFOLDER/malhosts.txt
 
 #fetching mvps
 mkdir temp
 cd temp
-$WG "http://winhelp2002.mvps.org/hosts.zip"
+$FETCH "http://winhelp2002.mvps.org/hosts.zip"
 unzip -q hosts.zip
 rm -rf *.zip
 mv HOSTS ../mvps.txt
 cd ..
 rm -rf temp
-mv mvps.txt hosts/
+mv mvps.txt $HFOLDER
 
 #fetching sysctlhosts
-$WG "http://sysctl.org/cameleon/hosts.win" -O hosts/sysctlhosts.txt
+$FETCH "http://sysctl.org/cameleon/hosts.win" $FOUT $HFOLDERsysctlhosts.txt
 
 #fetching yoyohosts
-$WG "http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext" -O hosts/yoyohosts.txt
+$FETCH "http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext" $FOUT $HFOLDERyoyohosts.txt
 
 #merging files
-cat hosts/*.txt > all-hosts.txt
+cat $HFOLDER*.txt > all-hosts.txt
 
 #cleaning 2
-sed '/^#/ d' < all-hosts.txt > MacHosts.txt
-rm -rf all-hosts.txt hosts/
+sed '/^#/ d' < all-hosts.txt > $MACHOSTSFILE
+rm -rf all-hosts.txt $HFOLDER
 
 #echo'ing
 echo " "
-echo "All fetched, check MacHosts.txt"
+echo "All fetched, check $MACHOSTSFILE"
 echo " "
